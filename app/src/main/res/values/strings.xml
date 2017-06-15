@@ -1,3 +1,8 @@
 <resources>
+
     <string name="app_name">Kimo</string>
+    <string name="title_activity_main">Main Menu</string>
+
+    <string name="finally_newOne">Finally!</string>
+
 </resources>

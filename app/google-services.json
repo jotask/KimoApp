@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "193198278969",
+    "firebase_url": "https://kimo-2412.firebaseio.com",
+    "project_id": "kimo-2412",
+    "storage_bucket": "kimo-2412.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193198278969:android:53f5fc6b2bc11386",
+        "android_client_info": {
+          "package_name": "com.github.jotask.kimo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193198278969-k351lhe106lh0mc20fk2s0is0flovt39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwNW1561XTdAgdv308nv8hmL24ytRW1W8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
