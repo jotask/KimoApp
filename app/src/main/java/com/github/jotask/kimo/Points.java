@@ -13,8 +13,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Points extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "Points";
-    private static final String table = "points";
+    public static final String TAG = "Points";
+    public static final String table = "points";
 
     private FirebaseDatabase database;
     private DatabaseReference ref;

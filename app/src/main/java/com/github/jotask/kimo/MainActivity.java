@@ -11,10 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import com.github.jotask.kimo.util.Point;
 import com.github.jotask.kimo.util.notification.Alarm;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -36,14 +37,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        final MainActivity instance = this;
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(final View view) {
+
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Points.table);
+
+                final StringBuilder sb = new StringBuilder();
+
+                ref.runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(MutableData mutableData) {
+                        Point p = mutableData.getValue(Point.class);
+                        if(p == null){
+                            return Transaction.success(mutableData);
+                        }
+                        sb.append(String.valueOf(p.points));
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                        Log.d("CACA", sb.toString());
+                        Snackbar.make(view, sb.toString() + " points.", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+
+                });
+
             }
         });
 
