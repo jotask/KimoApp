@@ -42,17 +42,10 @@
                 android:layout_height="242dp">
 
             <Button
-                    android:text="Nothing"
+                    android:text="Points"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/button5"
-                    android:layout_weight="1"/>
-
-            <Button
-                    android:text="Nothing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/button4"
+                    android:id="@+id/points"
                     android:layout_weight="1"/>
 
         </LinearLayout>

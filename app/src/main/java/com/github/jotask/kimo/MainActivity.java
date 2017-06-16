@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.github.jotask.kimo.util.notification.Alarm;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -27,6 +30,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null){
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        }
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,8 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+
         findViewById(R.id.kimos).setOnClickListener(this);
         findViewById(R.id.kanal).setOnClickListener(this);
+        findViewById(R.id.points).setOnClickListener(this);
 
         {
             // Notifications
@@ -69,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "Kanal clicked");
                 startActivity(new Intent(this, Kanals.class));
                 break;
+            case R.id.points:
+                Log.d(TAG, "Points clicked");
+                startActivity(new Intent(this, Points.class));
+                break;
+            default:
+                Log.d(TAG, "Unkown action");
         }
     }
 }
