@@ -1,5 +1,7 @@
 package com.github.jotask.kimo;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+import com.github.jotask.kimo.util.notification.Alarm;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -32,6 +39,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.kimos).setOnClickListener(this);
         findViewById(R.id.kanal).setOnClickListener(this);
 
+        {
+            // Notifications
+            Calendar updateTime = Calendar.getInstance();
+            updateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
+            updateTime.set(Calendar.HOUR_OF_DAY, 11);
+            updateTime.set(Calendar.MINUTE, 45);
+
+            // Create alarm
+            Intent intent = new Intent(this, Alarm.class);
+            PendingIntent pendingIntent = PendingIntent.getService(MainActivity.this, 0, intent, 0);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_HOUR, pendingIntent);
+
+            Toast.makeText(MainActivity.this, "I Love You Kimo!", Toast.LENGTH_LONG).show();
+
+        }
+
     }
 
     @Override
@@ -43,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.kanal:
                 Log.d(TAG, "Kanal clicked");
+                startActivity(new Intent(this, Kanals.class));
                 break;
         }
     }

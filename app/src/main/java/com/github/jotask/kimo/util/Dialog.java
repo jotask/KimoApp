@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import com.github.jotask.kimo.Kanals;
 import com.github.jotask.kimo.Kimos;
 import com.google.firebase.database.DatabaseReference;
 
@@ -66,6 +67,57 @@ public class Dialog {
                 final Kimo kimo = new Kimo(bar.getProgress() * 10);
                 final DatabaseReference r = ref.push();
                 r.setValue(kimo);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    public static void newKanal(final Kanals activity, final DatabaseReference ref) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Such a good girl!");
+
+        LinearLayout layout = new LinearLayout(activity);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final SeekBar bar = new SeekBar(activity);
+        bar.setProgress(50);
+        layout.addView(bar);
+
+        final TextView view = new TextView(activity);
+        view.setGravity(Gravity.CENTER_HORIZONTAL);
+        view.setText(String.valueOf(bar.getProgress() / 10));
+        layout.addView(view);
+
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                view.setText(String.valueOf(bar.getProgress() / 10));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+
+        builder.setView(layout);
+//
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final Kanal kanal = new Kanal(bar.getProgress() * 10);
+                final DatabaseReference r = ref.push();
+                r.setValue(kanal);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

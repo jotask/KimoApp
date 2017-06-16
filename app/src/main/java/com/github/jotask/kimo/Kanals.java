@@ -9,30 +9,30 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.jotask.kimo.util.Dialog;
-import com.github.jotask.kimo.util.Kimo;
-import com.github.jotask.kimo.util.Timer;
+import com.github.jotask.kimo.util.Kanal;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
 import java.util.Date;
 
-public class Kimos extends AppCompatActivity {
+public class Kanals extends AppCompatActivity {
 
-    public static final String TAG = "Kimos";
-    private static final String table = "kimos";
+    public static final String TAG = "Kanal";
+    private static final String table = "kanals";
 
     public TextView text;
-
-    private Timer timer;
 
     private FirebaseDatabase database;
     private DatabaseReference ref;
 
+    public Kanals() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kimos);
+        setContentView(R.layout.activity_kanals);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -41,8 +41,8 @@ public class Kimos extends AppCompatActivity {
             startActivity(intent);
         }
 
-        text = (TextView) findViewById(R.id.sinceLast);
-        final TextView counter = (TextView) findViewById(R.id.counter);
+        text = (TextView) findViewById(R.id.sinceLastKanal);
+        final TextView counter = (TextView) findViewById(R.id.counterKanal);
 
         this.database = FirebaseDatabase.getInstance();
         this.ref = database.getReference(table);
@@ -51,8 +51,8 @@ public class Kimos extends AppCompatActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Kimo kimo = dataSnapshot.getValue(Kimo.class);
-                setLast(kimo);
+                Kanal kanal = dataSnapshot.getValue(Kanal.class);
+                setLast(kanal);
             }
 
             @Override
@@ -72,38 +72,31 @@ public class Kimos extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                counter.setText(String.valueOf(dataSnapshot.getChildrenCount()) + " kimos stored");
-                Toast.makeText(Kimos.this, "Updated", Toast.LENGTH_SHORT).show();
+                counter.setText(String.valueOf(dataSnapshot.getChildrenCount()) + " kanals stored");
+                Toast.makeText(Kanals.this, "Updated", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) { Log.e(TAG, databaseError.getMessage()); }
         });
 
-        Button button = (Button) findViewById(R.id.update);
+        Button button = (Button) findViewById(R.id.updateKanal);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { newKimo(); }
+            public void onClick(View v) { newKanal(); }
         });
-
-        this.timer = new Timer(this);
 
     }
 
-    public void setLast(Kimo last){
+    public void setLast(Kanal last){
 
         if(last == null)
             return;
 
         final long diff = getDiff(last.getTime());
         final int days = (int) diff / (1000 * 60 * 60 * 24);
-        this.timer.stop();
-        if(days > 0){
-            text.setText(String.valueOf(days) + " days");
-        }else{
-            this.timer.set(last);
-            this.timer.start();
-        }
+        text.setText(String.valueOf(days) + " days");
+
     }
 
     static long getDiff(final long saved){
@@ -112,20 +105,8 @@ public class Kimos extends AppCompatActivity {
         return d2.getTime() - d1.getTime();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        this.timer.stop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        this.timer.restart();
-    }
-
-    public void newKimo(){
-        Dialog.newKimoJob(this, ref);
+    public void newKanal(){
+        Dialog.newKanal(this, ref);
     }
 
 }
