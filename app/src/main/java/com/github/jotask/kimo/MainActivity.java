@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                        Log.d("CACA", sb.toString());
                         Snackbar.make(view, sb.toString() + " points.", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
@@ -77,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.kimos).setOnClickListener(this);
         findViewById(R.id.kanal).setOnClickListener(this);
         findViewById(R.id.points).setOnClickListener(this);
+        findViewById(R.id.shop).setOnClickListener(this);
 
         {
             // Notifications
@@ -112,8 +112,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "Points clicked");
                 startActivity(new Intent(this, Points.class));
                 break;
+            case R.id.shop:
+                Log.d(TAG, "Shop clicked");
+                startActivity(new Intent(this, Shop.class));
+                break;
             default:
-                Log.d(TAG, "Unkown action");
+                Log.d(TAG, "Unknown action");
         }
     }
 }

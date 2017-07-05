@@ -47,6 +47,12 @@
                     android:layout_height="match_parent"
                     android:id="@+id/points"
                     android:layout_weight="1"/>
+            <Button
+                    android:text="Shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/shop"
+                    android:layout_weight="1"/>
 
         </LinearLayout>
     </LinearLayout>
